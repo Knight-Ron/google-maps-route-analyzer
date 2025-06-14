@@ -4,100 +4,91 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 import time
-
-# Set up the Chrome WebDriver
-driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
-driver.get("https://www.google.com/maps")
-time.sleep(3)
-
-# Step 1: Search for location
-def search_place():
-    search_box = driver.find_element(By.CSS_SELECTOR, ".searchboxinput")
-    search_box.clear()
-    search_box.send_keys("Paris")
-    search_box.send_keys(Keys.ENTER)
-    time.sleep(5)
-
-# Step 2: Click on Directions button
-def direction():
-    time.sleep(3)
-    direction_btn = driver.find_element(By.XPATH, '//button[@data-value="Directions"]')
-    direction_btn.click()
-    time.sleep(5)
-
-# Step 3: Enter destination point
-def search_point():
-    time.sleep(3)
-    # Get both input fields
-    input_fields = driver.find_elements(By.CSS_SELECTOR, 'input.tactile-searchbox-input')
-    if len(input_fields) >= 2:
-        # First input = FROM, Second input = TO
-        from_box = input_fields[0]
-        to_box = input_fields[1]
-
-        # Optional: Clear and retype location in FROM
-        from_box.clear()
-        from_box.send_keys("Paris")
-        time.sleep(1)
-
-        # Now type destination point in destination (TO)
-        to_box.clear()
-        to_box.send_keys("London")
-        to_box.send_keys(Keys.ENTER)
-        time.sleep(5)
-    else:
-        print("Error: Input boxes not found.")
-
-# Step 4: print directions
-def print_info():
-    time.sleep(5)
-    try:
-        routes = driver.find_elements(By.CSS_SELECTOR, ".section-directions-trip-title span")
-        for r in routes:
-            print("Route:", r.text)
-    except Exception as e:
-        print("Failed to print route info:", str(e))
-
 import csv
 import json
 
-# New: Save route info to a file
-def save_route_info():
+# City pairs to test
+city_pairs = [
+    ("Paris", "London"),
+    ("New York", "Boston"),
+    ("Berlin", "Munich"),
+    ("Tokyo", "Kyoto"),
+    ("Delhi", "Mumbai"),
+    ("San Francisco", "Los Angeles"),
+    ("Sydney", "Melbourne"),
+    ("Rome", "Venice"),
+    ("Toronto", "Montreal"),
+    ("Beijing", "Shanghai")
+]
+
+# To store results
+results = []
+
+# Setup Chrome driver
+driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
+driver.maximize_window()
+
+# Loop through city pairs
+for from_city, to_city in city_pairs:
+    print(f"\nSearching route from {from_city} to {to_city}...")
+    result = {
+        "from": from_city,
+        "to": to_city,
+        "status": ""
+    }
+
+    driver.get("https://www.google.com/maps")
+    time.sleep(4)
+
     try:
-        routes = driver.find_elements(By.CSS_SELECTOR, ".section-directions-trip")
-        route_data = []
-        for r in routes:
-            title = r.find_element(By.CLASS_NAME, "section-directions-trip-title").text
-            duration = r.find_element(By.CLASS_NAME, "section-directions-trip-duration").text
-            distance = r.find_element(By.CLASS_NAME, "section-directions-trip-distance").text
+        search_box = driver.find_element(By.CSS_SELECTOR, ".searchboxinput")
+        search_box.clear()
+        search_box.send_keys(from_city)
+        search_box.send_keys(Keys.ENTER)
+        time.sleep(4)
 
-            route_data.append({
-                "route": title,
-                "duration": duration,
-                "distance": distance
-            })
+        direction_btn = driver.find_element(By.XPATH, '//button[@data-value="Directions"]')
+        direction_btn.click()
+        time.sleep(4)
 
-        # Save to JSON
-        with open("data/routes.json", "w") as jf:
-            json.dump(route_data, jf, indent=4)
+        boxes = driver.find_elements(By.CSS_SELECTOR, 'input.tactile-searchbox-input')
+        if len(boxes) >= 2:
+            boxes[0].clear()
+            boxes[0].send_keys(from_city)
+            time.sleep(1)
 
-        # Save to CSV
-        with open("data/routes.csv", "w", newline='') as cf:
-            writer = csv.DictWriter(cf, fieldnames=["route", "duration", "distance"])
-            writer.writeheader()
-            writer.writerows(route_data)
+            boxes[1].clear()
+            boxes[1].send_keys(to_city)
+            boxes[1].send_keys(Keys.ENTER)
+            time.sleep(6)
 
-        print("Routes saved to data/routes.json and data/routes.csv")
+            routes = driver.find_elements(By.CSS_SELECTOR, ".section-directions-trip-title span")
+            if routes:
+                print("[✓] Route found.")
+                result["status"] = "Route found"
+            else:
+                print("[X] No route found.")
+                result["status"] = "No route found"
+        else:
+            print("[X] Could not find input boxes.")
+            result["status"] = "Input box error"
 
     except Exception as e:
-        print("Saving failed:", e)
+        print("[X] Error:", e)
+        result["status"] = f"Error: {str(e)}"
 
-# Run steps
-search_place()
-direction()
-search_point()
-print_info()
-save_route_info()
+    results.append(result)
 
+driver.quit()
 
-# driver.quit()
+# Write results to CSV
+with open("results.csv", mode="w", newline="", encoding="utf-8") as file:
+    writer = csv.DictWriter(file, fieldnames=["from", "to", "status"])
+    writer.writeheader()
+    writer.writerows(results)
+
+# Write results to JSON
+with open("results.json", mode="w", encoding="utf-8") as file:
+    json.dump(results, file, indent=4)
+
+print("\n✅ Results saved to results.csv and results.json")

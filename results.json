@@ -1,0 +1,52 @@
+[
+    {
+        "from": "Paris",
+        "to": "London",
+        "status": "No route found"
+    },
+    {
+        "from": "New York",
+        "to": "Boston",
+        "status": "No route found"
+    },
+    {
+        "from": "Berlin",
+        "to": "Munich",
+        "status": "No route found"
+    },
+    {
+        "from": "Tokyo",
+        "to": "Kyoto",
+        "status": "No route found"
+    },
+    {
+        "from": "Delhi",
+        "to": "Mumbai",
+        "status": "No route found"
+    },
+    {
+        "from": "San Francisco",
+        "to": "Los Angeles",
+        "status": "No route found"
+    },
+    {
+        "from": "Sydney",
+        "to": "Melbourne",
+        "status": "No route found"
+    },
+    {
+        "from": "Rome",
+        "to": "Venice",
+        "status": "No route found"
+    },
+    {
+        "from": "Toronto",
+        "to": "Montreal",
+        "status": "No route found"
+    },
+    {
+        "from": "Beijing",
+        "to": "Shanghai",
+        "status": "No route found"
+    }
+]
