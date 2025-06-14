@@ -35,18 +35,6 @@ This project is ideal for:
 
 ---
 
-## Folder Structure
-
-google-maps-route-analyzer/
-├── main.py # Entry point for the script
-├── README.md # Project documentation
-├── requirements.txt # Python dependencies
-├── data/
-│ ├── routes.csv # Exported CSV data
-│ └── routes.json # Exported JSON data
-
----
-
 ## How to Run
 
 ### Step 1: Clone the Repository
@@ -56,18 +44,18 @@ google-maps-route-analyzer/
         cd google-maps-route-analyzer
 
 ### Step 2: Install Dependencies
-
-pip install -r requirements.txt
+    ```bash
+    pip install selenium webdriver-manager
 
 ### Step 3: Run the Script
-
-python main.py
+    ```bash
+    python main.py
 
 The script will:
 - Open Google Maps
-- Search for directions from Paris to London
-- Extract route information (name, duration, distance)
-- Save the results into data/routes.csv and data/routes.json
+- Search for directions 
+- Extract route information 
+- Save the results
 
 ---
 
@@ -84,7 +72,7 @@ The script will:
 ## License
 This project is licensed under the MIT License.
 
-===
+---
 
 ## Author
 Ronald Jacob
