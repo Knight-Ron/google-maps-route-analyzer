@@ -8,4 +8,27 @@ San Francisco,Los Angeles,No route found
 Sydney,Melbourne,No route found
 Rome,Venice,No route found
 Toronto,Montreal,No route found
-Beijing,Shanghai,No route found
+Beijing,Shanghai,"Error: Message: invalid session id
+Stacktrace:
+	GetHandleVerifier [0x0x1173783+63299]
+	GetHandleVerifier [0x0x11737c4+63364]
+	(No symbol) [0x0xfa0f70]
+	(No symbol) [0x0xfdc9a8]
+	(No symbol) [0x0x100e436]
+	(No symbol) [0x0x1009f05]
+	(No symbol) [0x0x1009486]
+	(No symbol) [0x0xf73a05]
+	(No symbol) [0x0xf73f5e]
+	(No symbol) [0x0xf743ed]
+	GetHandleVerifier [0x0x13ce073+2531379]
+	GetHandleVerifier [0x0x13c9372+2511666]
+	GetHandleVerifier [0x0x1199efa+220858]
+	GetHandleVerifier [0x0x118a548+156936]
+	GetHandleVerifier [0x0x1190c7d+183357]
+	(No symbol) [0x0xf736d0]
+	(No symbol) [0x0xf72edd]
+	GetHandleVerifier [0x0x1507f1c+3817180]
+	BaseThreadInitThunk [0x0x758e5d49+25]
+	RtlInitializeExceptionChain [0x0x7777d09b+107]
+	RtlGetAppContainerNamedObjectPath [0x0x7777d021+561]
+"

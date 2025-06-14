@@ -1,0 +1,11 @@
+from,to,status
+Paris,London,No route
+New York,Boston,No route
+Berlin,Munich,No route
+Tokyo,Kyoto,No route
+Delhi,Mumbai,No route
+San Francisco,Los Angeles,No route
+Sydney,Melbourne,No route
+Rome,Venice,No route
+Toronto,Montreal,No route
+Beijing,Shanghai,No route
