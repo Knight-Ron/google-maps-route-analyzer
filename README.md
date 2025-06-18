@@ -75,6 +75,8 @@ This project is licensed under the MIT License.
 ---
 
 ## Author
-Ronald Jacob
-GitHub: Knight-Ron
-LinkedIn: linkedin.com/in/ronaldjacob
+Ronald Jacob:
+
+[GitHub](https://github.com/Knight-Ron)
+
+[LinkedIn](https://linkedin.com/in/ronaldjacob)
